@@ -13,15 +13,17 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Plus, Minus, Upload, X, AlertCircle } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import { addExercise } from "@/lib/exercise-data"
+import { addExercise } from "@/lib/firebase-exercises"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import LoadingSpinner from "@/components/loading-spinner"
+import { db } from "@/lib/firebase"
 
 export default function CreateExercise() {
   const router = useRouter()
   const { toast } = useToast()
   const [isAdmin, setIsAdmin] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [firebaseError, setFirebaseError] = useState<string | null>(null)
 
   // Basic exercise info
   const [exerciseType, setExerciseType] = useState("")
@@ -78,6 +80,11 @@ export default function CreateExercise() {
 
     setIsAdmin(adminStatus)
     setLoading(false)
+
+    // Check Firebase connection
+    if (!db) {
+      setFirebaseError("Firebase is not properly initialized. Please try refreshing the page.")
+    }
   }, [router])
 
   // Reset part when type changes
@@ -318,6 +325,15 @@ export default function CreateExercise() {
       return
     }
 
+    if (firebaseError) {
+      toast({
+        title: "Error",
+        description: firebaseError,
+        variant: "destructive",
+      })
+      return
+    }
+
     try {
       // Create new exercise object
       const newExercise = {
@@ -391,6 +407,14 @@ export default function CreateExercise() {
             <Button variant="outline">Back to Dashboard</Button>
           </Link>
         </div>
+
+        {firebaseError && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>{firebaseError}</AlertDescription>
+          </Alert>
+        )}
 
         <form onSubmit={handleSubmit}>
           <Card className="mb-6">
