@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "buildCommand": "pnpm build",
+  "installCommand": "pnpm install",
+  "framework": "nextjs",
+  "regions": ["fra1"],
+  "env": {
+    "NEXT_PUBLIC_FIREBASE_API_KEY": "AIzaSyCVgDozEtEnz1BWZJfS-0-KkRWntCiNt8Y",
+    "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN": "telcmate.firebaseapp.com",
+    "NEXT_PUBLIC_FIREBASE_PROJECT_ID": "telcmate",
+    "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET": "telcmate.firebasestorage.app",
+    "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "945468433513",
+    "NEXT_PUBLIC_FIREBASE_APP_ID": "1:945468433513:web:88cc94b0976589a63f6ef8",
+    "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID": "G-ZRG66F2W9R"
+  }
+} 
